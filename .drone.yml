@@ -34,12 +34,13 @@ steps:
         from_secret: deploy_password
     when:
       branch:
+        - main
         - master
     depends_on:
       - docker
 
 ---
 kind: signature
-hmac: 9b49324f4cdc7f75086510b68658317bb61160afef3e3175eae43e1d89f116a6
+hmac: ebd379d6015183df72861ecd9bec9ff5c1f62789f850f4fbed9bb0f0c7354fdc
 
 ...
