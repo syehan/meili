@@ -193,7 +193,7 @@ const App = () => {
             <Body>
               {/* <Sidebar /> */}
               <Box
-                width={928}
+                width="80vw"
                 m="0 auto"
                 py={4}
                 display="flex"

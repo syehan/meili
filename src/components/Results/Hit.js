@@ -23,6 +23,24 @@ const CustomCard = styled(Card)`
   display: flex;
 `
 
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  justify-content: space-around;
+`
+
+const RowNoWrap = styled(Row)`
+  flex-flow: row nowrap;
+`
+
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -183,56 +201,86 @@ const FieldValue = ({ value, hit, objectKey }) => {
   )
 }
 
-const Hit = ({ hit, imageKey }) => {
-  const [displayMore, setDisplayMore] = React.useState(false)
+const Hit({ hit, imageKey }) {
+  const [displayMore, setDisplayMore] = React.useState(true)
   const documentProperties = Object.entries(hit._highlightResult)
   return (
     <CustomCard>
-      <Box width={240} mr={4} flexShrink={0}>
-        {hit[imageKey] ? (
-          <LazyLoadImage
-            src={hit[imageKey] || null}
-            width="100%"
-            style={{ borderRadius: 10 }}
-          />
-        ) : (
-          <EmptyImage />
-        )}
-      </Box>
-      <ContentContainer>
-        {documentProperties
-          .slice(0, displayMore ? hit.length : 6)
-          .map(([key, value]) => (
-            <div key={key}>
+      <Column>
+        <RowNoWrap style={{ marginBottom: 64 }}>
+          <Box width={360} mr={4} flexShrink={0}>
+            {hit[imageKey] ? (
+              <LazyLoadImage
+                src={hit[imageKey] || null}
+                width="100%"
+                style={{
+                  borderRadius: 10,
+                  boxShadow: '0px 8px 1rem rgba(0, 0, 0, 0.3)',
+                }}
+              />
+            ) : (
+              <EmptyImage />
+            )}
+          </Box>
+          <ContentContainer>
+            {documentProperties
+              .slice(0, displayMore ? hit.length : 6)
+              .map(([key, value], index) => (
+                <div key={key}>
+                  <Grid>
+                    <HitKey variant="typo10" color="gray.6">
+                      {key}
+                    </HitKey>
+                    <HitValue>
+                      <FieldValue
+                        value={value.value}
+                        hit={hit}
+                        objectKey={key}
+                      />
+                    </HitValue>
+                  </Grid>
+                  <Hr />
+                </div>
+              ))}
+            {documentProperties.length > 6 && !displayMore && (
               <Grid>
                 <HitKey variant="typo10" color="gray.6">
-                  {key}
+                  ...
                 </HitKey>
                 <HitValue>
                   <FieldValue value={value} hit={hit} objectKey={key} />
                 </HitValue>
+                <div>
+                  <Button
+                    variant="link"
+                    size="small"
+                    toggable
+                    onClick={() => setDisplayMore(true)}
+                  >
+                    Show more
+                  </Button>
+                </div>
               </Grid>
-              <Hr />
-            </div>
-          ))}
-        {documentProperties.length > 6 && !displayMore && (
-          <Grid>
-            <HitKey variant="typo10" color="gray.6">
-              ...
-            </HitKey>
-            <div>
-              <Button
-                variant="link"
-                size="small"
-                toggable
-                onClick={() => setDisplayMore(true)}
-              >
-                Show more
-              </Button>
-            </div>
-          </Grid>
-        )}
-      </ContentContainer>
+            )}
+          </ContentContainer>
+        </RowNoWrap>
+        <Row>
+          {hit.images
+            ? hit.images.map((i) => (
+                <Box>
+                  <LazyLoadImage
+                    src={i}
+                    width="100%"
+                    style={{
+                      borderRadius: 10,
+                      boxShadow: '0px 8px 1rem rgba(0, 0, 0, 0.3)',
+                    }}
+                  />
+                </Box>
+              ))
+            : null}
+        </Row>
+      </Column>
     </CustomCard>
   )
 }

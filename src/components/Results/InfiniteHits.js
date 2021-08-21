@@ -22,7 +22,9 @@ const findImageKey = (array) => {
   const imageKey = array.find(
     (elem) =>
       typeof elem[1] === 'string' &&
-      elem[1].match(/^(https|http):\/\/.*(jpe?g|png|gif|webp)(\?.*)?$/g)
+      elem[1].match(
+        /^(https|http):\/\/.*(jpe?g|png|gif|image;s=\d+x\d+)(\?.*)?$/g
+      )
   )
   return imageKey?.[0]
 }
