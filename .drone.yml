@@ -1,0 +1,45 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+environment:
+  DOCKER_BUILDKIT: "1"
+
+steps:
+  - name: docker
+    image: plugins/docker
+    settings:
+      auto_tag: true
+      build_args:
+        - BUILDKIT_INLINE_CACHE=1
+      password:
+        from_secret: docker_password
+      repo: alinpanaitiu/meilidash
+      username: alinpanaitiu
+      purge: false
+      cache_from:
+        - alinpanaitiu/meilidash:latest
+
+  - name: deploy
+    image: curlimages/curl
+    commands:
+      - curl -L -s -S https://alin:$${DEPLOY_PASSWORD}@deploy.darkwoods.win/meili
+    environment:
+      DEPLOY_PASSWORD:
+        from_secret: deploy_password
+    when:
+      branch:
+        - master
+    depends_on:
+      - docker
+
+---
+kind: signature
+hmac: 9b49324f4cdc7f75086510b68658317bb61160afef3e3175eae43e1d89f116a6
+
+...

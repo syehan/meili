@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: drone-lint-fmt-sign
+        name: Validate Drone configuration
+        language: system
+        files: .drone.yml
+        entry: sh -c 'drone lint; drone sign --save alin23/meili'
+        stages: [commit]

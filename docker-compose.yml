@@ -1,0 +1,55 @@
+version: "3.8"
+
+x-refs:
+  restart: &restart
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      rollback_config:
+        parallelism: 2
+      update_config:
+        parallelism: 2
+
+networks:
+  meili:
+
+volumes:
+  data:
+  dumps:
+  snapshots:
+
+services:
+  server:
+    image: getmeili/meilisearch:latest
+    container_name: meilisearch
+    <<: *restart
+    volumes:
+      - data:/data.ms
+      - dumps:/dumps
+      - snapshots:/snapshots
+    networks:
+      - meili
+    ports:
+      - 7700:7700
+    environment:
+      MEILI_ENV: production
+      MEILI_MASTER_KEY:
+      MEILI_NO_SENTRY: "true"
+
+  dashboard:
+    build:
+      context: .
+      args:
+        - BUILDKIT_INLINE_CACHE=1
+      cache_from:
+        - alinpanaitiu/meilidash:latest
+    image: alinpanaitiu/meilidash:latest
+    container_name: meilidash
+    <<: *restart
+    networks:
+      - meili
+    ports:
+      - 5002:5000
+    environment:
+      NODE_ENV: production
