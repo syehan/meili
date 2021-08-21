@@ -10,24 +10,10 @@ x-refs:
         parallelism: 2
       update_config:
         parallelism: 2
-
-networks:
-  meili:
-
-volumes:
-  data:
-  dumps:
-  snapshots:
-
-services:
-  server:
+  server: &server
     image: getmeili/meilisearch:latest
     container_name: meilisearch
     <<: *restart
-    volumes:
-      - data:/data.ms
-      - dumps:/dumps
-      - snapshots:/snapshots
     networks:
       - meili
     ports:
@@ -36,6 +22,48 @@ services:
       MEILI_ENV: production
       MEILI_MASTER_KEY:
       MEILI_NO_SENTRY: "true"
+
+networks:
+  meili:
+
+volumes:
+  data0:
+  data1:
+  data2:
+  dumps0:
+  dumps1:
+  dumps2:
+  snapshots0:
+  snapshots1:
+  snapshots2:
+
+services:
+  server0:
+    <<: *server
+    ports:
+      - 7700:7700
+    volumes:
+      - data0:/data.ms
+      - dumps0:/dumps
+      - snapshots0:/snapshots
+
+  server1:
+    <<: *server
+    ports:
+      - 7701:7700
+    volumes:
+      - data1:/data.ms
+      - dumps1:/dumps
+      - snapshots1:/snapshots
+
+  server2:
+    <<: *server
+    ports:
+      - 7702:7700
+    volumes:
+      - data2:/data.ms
+      - dumps2:/dumps
+      - snapshots2:/snapshots
 
   dashboard:
     build:
