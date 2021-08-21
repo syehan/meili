@@ -20,7 +20,7 @@ steps:
     image: node:16-alpine
     volumes:
       - name: static
-        path: /app/build
+        path: /build
     commands:
       - npm install
       - npm run build
@@ -56,6 +56,6 @@ steps:
 
 ---
 kind: signature
-hmac: 92392fa58af322232d932f2da94b4e20ac3f357ada7cfcac36db41758f01d80d
+hmac: 269c4318c178c08536f2285231dcd05e6b3c155820fedadec8468783f72c4723
 
 ...
