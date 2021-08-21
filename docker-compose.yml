@@ -64,20 +64,19 @@ services:
       - data2:/data.ms
       - dumps2:/dumps
       - snapshots2:/snapshots
-
-  dashboard:
-    build:
-      context: .
-      args:
-        - BUILDKIT_INLINE_CACHE=1
-      cache_from:
-        - alinpanaitiu/meilidash:latest
-    image: alinpanaitiu/meilidash:latest
-    container_name: meilidash
-    <<: *restart
-    networks:
-      - meili
-    ports:
-      - 5002:5000
-    environment:
-      NODE_ENV: production
+  # dashboard:
+  #   build:
+  #     context: .
+  #     args:
+  #       - BUILDKIT_INLINE_CACHE=1
+  #     cache_from:
+  #       - alinpanaitiu/meilidash:latest
+  #   image: alinpanaitiu/meilidash:latest
+  #   container_name: meilidash
+  #   <<: *restart
+  #   networks:
+  #     - meili
+  #   ports:
+  #     - 5002:5000
+  #   environment:
+  #     NODE_ENV: production

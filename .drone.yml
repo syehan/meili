@@ -10,7 +10,21 @@ platform:
 environment:
   DOCKER_BUILDKIT: "1"
 
+volumes:
+  - name: static
+    host:
+      path: /static/meilisearch
+
 steps:
+  - name: build
+    image: node:16-alpine
+    volumes:
+      - name: static
+        path: /app/build
+    commands:
+      - npm install
+      - npm run build
+
   - name: docker
     image: plugins/docker
     settings:
@@ -37,10 +51,11 @@ steps:
         - main
         - master
     depends_on:
+      - build
       - docker
 
 ---
 kind: signature
-hmac: ebd379d6015183df72861ecd9bec9ff5c1f62789f850f4fbed9bb0f0c7354fdc
+hmac: 92392fa58af322232d932f2da94b4e20ac3f357ada7cfcac36db41758f01d80d
 
 ...
