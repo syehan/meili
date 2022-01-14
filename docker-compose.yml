@@ -13,6 +13,7 @@ x-refs:
   server: &server
     image: getmeili/meilisearch:v0.24.0
     command: ./meilisearch --import-dump /dumps/latest.dump --db-path /data.ms
+    user: root
     container_name: meilisearch
     <<: *restart
     networks:
