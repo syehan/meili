@@ -11,7 +11,7 @@ x-refs:
       update_config:
         parallelism: 2
   server: &server
-    image: getmeili/meilisearch:latest
+    image: getmeili/meilisearch:v0.20.0
     container_name: meilisearch
     <<: *restart
     networks:
