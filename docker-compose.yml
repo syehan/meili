@@ -12,7 +12,8 @@ x-refs:
         parallelism: 2
   server: &server
     image: getmeili/meilisearch:v0.24.0
-    command: ./meilisearch --import-dump /dumps/latest.dump
+    # command: rm -rf /database/data.ms; ./meilisearch --ignore-missing-snapshot --ignore-snapshot-if-db-exists --import-snapshot /snapshots/data.ms.snapshot
+    command: ./meilisearch
     user: root
     container_name: meilisearch
     <<: *restart
@@ -28,6 +29,7 @@ x-refs:
       MEILI_DB_PATH: /database/data.ms
       MEILI_SNAPSHOT_DIR: /snapshots
       MEILI_SCHEDULE_SNAPSHOT: "true"
+      MEILI_SNAPSHOT_INTERVAL_SEC: "60"
 
 networks:
   meili:
