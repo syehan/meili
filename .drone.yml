@@ -22,9 +22,10 @@ steps:
       - name: static
         path: /app/build
     commands:
+      - apk add rsync
       - npm install
       - npm run build
-      - mv build/* /app/build/
+      - rsync -avz --del build/* /app/build/
 
   - name: docker
     image: plugins/docker
@@ -57,6 +58,6 @@ steps:
 
 ---
 kind: signature
-hmac: 7db2380168ee241a17a35a012e1ce842139fd9f962e29c054c03dcdf12336f09
+hmac: 084e20841e7c73b90a778b5abf80338e4b30165eb3f0373c49d76ad2de0ba682
 
 ...
