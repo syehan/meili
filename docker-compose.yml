@@ -45,7 +45,7 @@ services:
     ports:
       - 7700:7700
     volumes:
-      - data0:/database/data.ms
+      - data0:/database
       - dumps0:/dumps
       - snapshots0:/snapshots
 
@@ -54,7 +54,7 @@ services:
     ports:
       - 7701:7700
     volumes:
-      - data1:/database/data.ms
+      - data1:/database
       - dumps1:/dumps
       - snapshots1:/snapshots
 
@@ -63,7 +63,7 @@ services:
     ports:
       - 7702:7700
     volumes:
-      - data2:/database/data.ms
+      - data2:/database
       - dumps2:/dumps
       - snapshots2:/snapshots
   # dashboard:
