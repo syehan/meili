@@ -12,7 +12,7 @@ x-refs:
         parallelism: 2
   server: &server
     image: getmeili/meilisearch:v0.25.0
-    command: rm -rf /database/data.ms; ./meilisearch --ignore-missing-snapshot --ignore-snapshot-if-db-exists --import-snapshot /snapshots/data.ms.snapshot
+    command: sh -c 'rm -rf /database/data.ms; ./meilisearch --ignore-missing-snapshot --ignore-snapshot-if-db-exists --import-snapshot /snapshots/data.ms.snapshot'
     user: root
     container_name: meilisearch
     <<: *restart
