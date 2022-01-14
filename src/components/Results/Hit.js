@@ -201,7 +201,7 @@ const FieldValue = ({ value, hit, objectKey }) => {
   )
 }
 
-const Hit({ hit, imageKey }) {
+const Hit = ({ hit, imageKey }) => {
   const [displayMore, setDisplayMore] = React.useState(true)
   const documentProperties = Object.entries(hit._highlightResult)
   return (
@@ -225,42 +225,30 @@ const Hit({ hit, imageKey }) {
           <ContentContainer>
             {documentProperties
               .slice(0, displayMore ? hit.length : 6)
-              .map(([key, value], index) => (
+              .map(([key, value]) => (
                 <div key={key}>
                   <Grid>
                     <HitKey variant="typo10" color="gray.6">
                       {key}
                     </HitKey>
                     <HitValue>
-                      <FieldValue
-                        value={value.value}
-                        hit={hit}
-                        objectKey={key}
-                      />
+                      <FieldValue value={value} hit={hit} objectKey={key} />
                     </HitValue>
                   </Grid>
                   <Hr />
                 </div>
               ))}
             {documentProperties.length > 6 && !displayMore && (
-              <Grid>
-                <HitKey variant="typo10" color="gray.6">
-                  ...
-                </HitKey>
-                <HitValue>
-                  <FieldValue value={value} hit={hit} objectKey={key} />
-                </HitValue>
-                <div>
-                  <Button
-                    variant="link"
-                    size="small"
-                    toggable
-                    onClick={() => setDisplayMore(true)}
-                  >
-                    Show more
-                  </Button>
-                </div>
-              </Grid>
+              <div>
+                <Button
+                  variant="link"
+                  size="small"
+                  toggable
+                  onClick={() => setDisplayMore(true)}
+                >
+                  Show more
+                </Button>
+              </div>
             )}
           </ContentContainer>
         </RowNoWrap>
