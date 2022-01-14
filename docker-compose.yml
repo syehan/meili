@@ -12,7 +12,7 @@ x-refs:
         parallelism: 2
   server: &server
     image: getmeili/meilisearch:latest
-    command: ./meilisearch --import-dump /dumps/latest.dump
+    command: ./meilisearch --import-dump /dumps/latest.dump --db-path /data.ms
     container_name: meilisearch
     <<: *restart
     networks:
