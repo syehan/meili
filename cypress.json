@@ -3,8 +3,8 @@
   "viewportWidth": 1440,
   "viewportHeight": 900,
   "env": {
-    "host": "http://0.0.0.0:7700",
-    "apiKey": "masterKey",
+    "host": "https://search-engine.ganjaran.app",
+    "apiKey": "679c358da626df4f384a67bd8bd19c627b0ac4d6dfc0990dc3cb88b59df0ca5e",
     "wrongApiKey": "wrongApiKey",
     "waitingTime": 1000
   }
