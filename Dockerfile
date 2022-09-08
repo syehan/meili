@@ -7,7 +7,7 @@ COPY package.json package.json
 RUN npm install
 
 COPY . /app/
-RUN REACT_APP_MEILI_SERVER_ADDRESS=https://search-engine.ganjaran.app npm run build
+RUN REACT_APP_MEILI_SERVER_ADDRESS=https://search.data.ganjaran.app npm run build
 
 
 FROM node:16-alpine
